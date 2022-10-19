@@ -55,7 +55,7 @@ function connect() {
 		}, 10_000),
 	};
 
-	const socket = io(`${getConfValue<string>('api.host')}/probes`, {
+	const socket = io(`${getConfValue<string>('api.host')}/probes2`, {
 		transports: ['websocket'],
 		reconnectionDelay: 100,
 		reconnectionDelayMax: 500,
@@ -159,7 +159,7 @@ function connect() {
 
 if (process.env['NODE_ENV'] === 'development') {
 	// Run multiple clients in dev mode for easier debugging
-	throng({worker: connect, count: physicalCpuCount})
+	throng({worker: connect, count: 100})
 		.catch(error => {
 			logger.error(error);
 		});
