@@ -82,8 +82,9 @@ function connect() {
 				socket.connect();
 			}
 		})
-		.on('connect_error', error => {
-			logger.error('connection to API failed:', error);
+		.on('connect_error', (error: Error & {description?: {message: string}}) => {
+			const message = error.description?.message ?? error.toString();
+			logger.error(`connection to API failed: ${message}`);
 
 			const isFatalError = fatalConnectErrors.some(fatalError => error.message.startsWith(fatalError));
 
